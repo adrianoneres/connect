@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+
+import os
+import sqlite3
+
+class Connect:
+
+    DATABASE_FILENAME = 'hosts.db'
+
+    def __init__(self):
+        self.__show_header()
+
+    def __show_header(self):
+        print('                                          __   ')
+        print('  ____  ____   ____   ____   ____   _____/  |_ ')
+        print('_/ ___\/  _ \ /    \ /    \_/ __ \_/ ___\   __\\')
+        print('\  \__(  <_> )   |  \   |  \  ___/\  \___|  |  ') 
+        print(' \___  >____/|___|  /___|  /\___  >\___  >__|  ')
+        print('     \/           \/     \/     \/     \/      ') 
+        print('                                          1.0.0')
+
+    def __validate_database(self):
+        database_filename = 'hosts.db'
+        new_db = not os.path.exists(database_filename)
+
+        conn = sqlite3.connect(database_filename)
+
+        if new_db:
+            self.__create_hosts_database()
+
+        else:
+            print('Databse exists. Connecting...')
+
+        conn.close
+
+    def __create_hosts_database(self):
+        print('Creating new local Database.')
+
+app = Connect()
