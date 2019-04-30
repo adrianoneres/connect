@@ -15,7 +15,7 @@ Connect is a small terminal utility, built in python, that helps you to organize
     chmod +x connect
 ```
 
-3. Run `connect`script:
+3. Run `connect` script:
 
 ```sh
     ./connect
