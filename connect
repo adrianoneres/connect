@@ -2,25 +2,23 @@
 
 import os
 import sqlite3
-import coloredlogs, logging
 
 class Connect:
 
     DATABASE_FILENAME = 'hosts.db'
 
     def __init__(self):
-        coloredlogs.install()
         self.__show_header()
         self.__validate_database()
 
     def __show_header(self):
-        logging.info('                                          __   ')
-        logging.info('  ____  ____   ____   ____   ____   _____/  |_ ')
-        logging.info('_/ ___\/  _ \ /    \ /    \_/ __ \_/ ___\   __\\')
-        logging.info('\  \__(  <_> )   |  \   |  \  ___/\  \___|  |  ') 
-        logging.info(' \___  >____/|___|  /___|  /\___  >\___  >__|  ')
-        logging.info('     \/           \/     \/     \/     \/      ') 
-        logging.info('                                          1.0.0')
+        print('                                          __   ')
+        print('  ____  ____   ____   ____   ____   _____/  |_ ')
+        print('_/ ___\/  _ \ /    \ /    \_/ __ \_/ ___\   __\\')
+        print('\  \__(  <_> )   |  \   |  \  ___/\  \___|  |  ') 
+        print(' \___  >____/|___|  /___|  /\___  >\___  >__|  ')
+        print('     \/           \/     \/     \/     \/      ') 
+        print('                                          1.0.0')
 
     def __validate_database(self):
         database_filename = 'hosts.db'
@@ -31,22 +29,22 @@ class Connect:
         if new_db:
             self.__create_hosts_database()
         else:
-            logging.info('Databse exists. Connecting...')
+            print('Databse exists. Connecting...')
 
         self.__start()
         self.__conn.close
 
     def __create_hosts_database(self):
-        logging.info('Creating new local Database.')
+        print('Creating new local Database.')
         try:
             sql = 'create table hosts (id integer primary key autoincrement, name, environment, user, host, key)'
             self.__conn.execute(sql)
             self.__conn.commit()
         except:
-            logging.error('It was not possible to create "hosts" table.')
+            print('It was not possible to create "hosts" table.')
 
     def __start(self):
-        print('Please, choose an option:\n')
+        print('\nPlease, choose an option:\n')
         print('1. open a registered connection')
         print('2. add new connection')
         print('3. delete an existing connection')
@@ -67,7 +65,7 @@ class Connect:
         elif option == 3:
             self.__remove_host()
         elif option == 4:
-            logging.info('Leaving... Thank you for using Connect! (:')
+            print('Leaving... Thank you for using Connect! (:')
         else:
             self.__invalid_menu_option()
 
@@ -78,7 +76,7 @@ class Connect:
         self.__hosts = cursor.fetchall()
 
         if self.__hosts:
-            print('Choose a host:\n')
+            print('\nChoose a host:\n')
             for index, host_current in enumerate(self.__hosts):
                 environment = host_current[2].upper()
                 name = host_current[1]
@@ -86,7 +84,7 @@ class Connect:
                 host = host_current[4]
                 print(f'{index + 1}. [{environment}] {name}: {user}@{host}')
         else:
-            logging.warning('No hosts registered.')
+            print('No hosts registered.')
             self.__start()
 
     def __open_connection(self):
@@ -125,9 +123,9 @@ class Connect:
         try:
             self.__conn.execute(sql, values)
             self.__conn.commit()
-            logging.info(f'Host {name} successfully registered.')
+            print(f'Host {name} successfully registered.')
         except Exception as e:
-            logging.error(e)
+            print(e)
 
         self.__start()
     
@@ -150,11 +148,11 @@ class Connect:
         self.__start()
 
     def __invalid_menu_option(self):
-        logging.error('Error: Invalid option. Please, choose a valid option from the menu:')
+        print('Error: Invalid option. Please, choose a valid option from the menu:')
         self.__start()
     
     def __invalid_host_option(self):
-        logging.error('There is no host with this identifier.')
+        print('There is no host with this identifier.')
         self.__start()
 
 app = Connect()
