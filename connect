@@ -16,7 +16,7 @@ class Connect:
         print('\  \__(  <_> )   |  \   |  \  ___/\  \___|  |  ') 
         print(' \___  >____/|___|  /___|  /\___  >\___  >__|  ')
         print('     \/           \/     \/     \/     \/      ') 
-        print('                                          1.0.1')
+        print('                                          1.1.0')
 
     def __validate_database(self):
         current_directory = os.path.dirname(os.path.realpath(__file__))
