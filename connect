@@ -5,8 +5,6 @@ import sqlite3
 
 class Connect:
 
-    DATABASE_FILENAME = 'hosts.db'
-
     def __init__(self):
         self.__show_header()
         self.__validate_database()
@@ -18,13 +16,15 @@ class Connect:
         print('\  \__(  <_> )   |  \   |  \  ___/\  \___|  |  ') 
         print(' \___  >____/|___|  /___|  /\___  >\___  >__|  ')
         print('     \/           \/     \/     \/     \/      ') 
-        print('                                          1.0.0')
+        print('                                          1.0.1')
 
     def __validate_database(self):
+        current_directory = os.path.dirname(os.path.realpath(__file__))
         database_filename = 'hosts.db'
-        new_db = not os.path.exists(database_filename)
+        database_file = '{}/{}'.format(current_directory, database_filename)
+        new_db = not os.path.exists(database_file)
 
-        self.__conn = sqlite3.connect(database_filename)
+        self.__conn = sqlite3.connect(database_file)
 
         if new_db:
             self.__create_hosts_database()
@@ -70,7 +70,7 @@ class Connect:
             self.__invalid_menu_option()
 
     def __show_all_hosts(self):
-        sql = 'select * from hosts'
+        sql = 'select * from hosts order by environment, name'
         cursor = self.__conn.cursor()
         cursor.execute(sql)
         self.__hosts = cursor.fetchall()
